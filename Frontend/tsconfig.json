@@ -13,11 +13,13 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
+    "suppressImplicitAnyIndexErrors": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2020",
     "module": "es2020",
+    "strictPropertyInitialization": false,
     "lib": [
       "es2020",
       "dom"
