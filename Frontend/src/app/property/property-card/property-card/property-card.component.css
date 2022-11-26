@@ -18,6 +18,7 @@ h1{
   transition-duration: 500ms;
   transition-timing-function: ease-out;
   height: 250px;
+  object-fit: cover;
 }
 
 .member-icon{

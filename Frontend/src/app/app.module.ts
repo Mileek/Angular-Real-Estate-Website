@@ -10,12 +10,14 @@ import { PropertyListComponent } from './property/property-list/property-list.co
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AddPropertyComponent } from './property/add-property/add-property.component';
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
+import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes =[
   {path:'', component: PropertyListComponent},
   {path:'rent-property', component: PropertyListComponent},
   {path:'add-property', component: AddPropertyComponent},
-  {path:'property-detail/:id', component: PropertyDetailComponent}
+  {path:'property-detail/:id', component: PropertyDetailComponent},
+  {path:'**', component: PropertyListComponent} //wrong URL component, który nie istnieje XD
 ]
 
 @NgModule({
@@ -30,6 +32,7 @@ const appRoutes: Routes =[
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule, //Po zaimportowaniu, można bez problemu kożystać z Form w html, bo to dodaje nam dodatkowe funkcje specyficzne dla Angular'a
     RouterModule.forRoot(appRoutes)
   ],
   //Rejestracja provicera, które tutaj nazywają się serwisami

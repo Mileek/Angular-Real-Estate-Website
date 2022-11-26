@@ -1,38 +1,50 @@
 [
   {
-    "Id": 1,
+    "id": 1,
+    "SellRent":1,
     "Name": "First Pic",
     "Type": "House",
-    "Price": 12000
+    "Price": 12000,
+    "Image": "1.jpg"
   },
   {
-    "Id": 2,
+    "id": 2,
+    "SellRent":2,
     "Name": "Second Pic",
     "Type": "House",
-    "Price": 12000
+    "Price": 13000,
+    "Image": "2.jpg"
   },
   {
-    "Id": 3,
+    "id": 3,
+    "SellRent":2,
     "Name": "Third Pic",
     "Type": "House",
-    "Price": 12000
+    "Price": 14000,
+    "Image": "3.png"
   },
   {
-    "Id": 4,
+    "id": 4,
+    "SellRent":2,
     "Name": "Fourth Pic",
     "Type": "House",
-    "Price": 12000
+    "Price": 15000,
+    "Image": "4.jpg"
   },
   {
-    "Id": 5,
+    "id": 5,
+    "SellRent":1,
     "Name": "Fifth Pic",
     "Type": "House",
-    "Price": 12000
+    "Price": 16000,
+    "Image": "5.png"
   },
   {
-    "Id": 6,
+    "id": 6,
+    "SellRent":1,
     "Name": "Sixth Pic",
     "Type": "House",
-    "Price": 12000
+    "Price": 12000,
+    "Image": "6.jpg"
   }
 ]
