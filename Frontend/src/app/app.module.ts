@@ -1,3 +1,4 @@
+import { UserLoginComponent } from './user/user-login/user-login-component/user-login/user-login.component';
 import { HousingService } from './services/housing.service';
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,14 +11,17 @@ import { PropertyListComponent } from './property/property-list/property-list.co
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AddPropertyComponent } from './property/add-property/add-property.component';
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserRegisterComponent } from './user/user-login/user-register/user-register/user-register.component';
 
 const appRoutes: Routes =[
   {path:'', component: PropertyListComponent},
   {path:'rent-property', component: PropertyListComponent},
   {path:'add-property', component: AddPropertyComponent},
+  {path:'user/login', component: UserLoginComponent},
+  {path:'user/register', component: UserRegisterComponent},
   {path:'property-detail/:id', component: PropertyDetailComponent},
-  {path:'**', component: PropertyListComponent} //wrong URL component, który nie istnieje XD
+  {path:'**', component: PropertyListComponent} //wrong URL component, który nie istnieje i gdzie ma odesłać XD
 ]
 
 @NgModule({
@@ -27,12 +31,15 @@ const appRoutes: Routes =[
     PropertyListComponent,
     NavBarComponent,
     AddPropertyComponent,
-    PropertyDetailComponent
+    PropertyDetailComponent,
+    UserLoginComponent,
+    UserRegisterComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule, //Po zaimportowaniu, można bez problemu kożystać z Form w html, bo to dodaje nam dodatkowe funkcje specyficzne dla Angular'a
+    ReactiveFormsModule, //Import tego powoduje że w projekcie możemy używać reakcyjnych formularzy
     RouterModule.forRoot(appRoutes)
   ],
   //Rejestracja provicera, które tutaj nazywają się serwisami
