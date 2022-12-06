@@ -1,3 +1,4 @@
+import { UserService } from './services/user.service';
 import { UserLoginComponent } from './user/user-login/user-login-component/user-login/user-login.component';
 import { HousingService } from './services/housing.service';
 import { NgModule, Component } from '@angular/core';
@@ -44,7 +45,8 @@ const appRoutes: Routes =[
   ],
   //Rejestracja provicera, które tutaj nazywają się serwisami
   providers: [
-    HousingService
+    HousingService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

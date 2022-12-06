@@ -13,7 +13,7 @@
             />
             <span
               class="error-block"
-              *ngIf="!userName?.valid && userName?.touched"
+              *ngIf="!userName?.valid && (userName?.touched || userSubmitted)"
             >
               <!-- registrationForm.get('userName') <- żeby nie zabrudzać kodu to w ts, dodaje sie gttery dla tych właściwości-->
               Please provide name
@@ -77,13 +77,14 @@
                 Please confirm password.
               </span>
             </span>
-            <span class="error-block"
-                *ngIf="registrationForm.hasError('notmatched')
-                &&
-                confirmPassword.valid"
-                ><!--wykorzystanie wlaściwości email stworzonej w typescript-->
-                Password not matched.
-              </span>
+            <span
+              class="error-block"
+              *ngIf="
+                registrationForm.hasError('notmatched') && confirmPassword.valid
+              "
+              ><!--wykorzystanie wlaściwości email stworzonej w typescript-->
+              Password not matched.
+            </span>
           </div>
 
           <div class="form-group col-12">
@@ -95,8 +96,6 @@
             <button type="submit" class="btn btn-primary">Save</button>
             <button type="reset" class="btn btn-secondary ml-2">Cancel</button>
           </div>
-          Form Values: {{ registrationForm.value | json }}<br />
-          Form Values: {{ registrationForm.valid }}
         </form>
       </div>
     </div>
