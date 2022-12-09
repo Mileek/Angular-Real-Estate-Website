@@ -1,10 +1,14 @@
+import { AuthService } from './services/auth.service';
+import { AlertifyService } from './services/alertify.service';
 import { UserService } from './services/user.service';
 import { UserLoginComponent } from './user/user-login/user-login-component/user-login/user-login.component';
 import { HousingService } from './services/housing.service';
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { AppComponent } from './app.component';
 import { PropertyCardComponent } from './property/property-card/property-card/property-card.component';
@@ -15,15 +19,15 @@ import { PropertyDetailComponent } from './property/property-detail/property-det
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRegisterComponent } from './user/user-login/user-register/user-register/user-register.component';
 
-const appRoutes: Routes =[
-  {path:'', component: PropertyListComponent},
-  {path:'rent-property', component: PropertyListComponent},
-  {path:'add-property', component: AddPropertyComponent},
-  {path:'user/login', component: UserLoginComponent},
-  {path:'user/register', component: UserRegisterComponent},
-  {path:'property-detail/:id', component: PropertyDetailComponent},
-  {path:'**', component: PropertyListComponent} //wrong URL component, który nie istnieje i gdzie ma odesłać XD
-]
+const appRoutes: Routes = [
+  { path: '', component: PropertyListComponent },
+  { path: 'rent-property', component: PropertyListComponent },
+  { path: 'add-property', component: AddPropertyComponent },
+  { path: 'user/login', component: UserLoginComponent },
+  { path: 'user/register', component: UserRegisterComponent },
+  { path: 'property-detail/:id', component: PropertyDetailComponent },
+  { path: '**', component: PropertyListComponent }, //wrong URL component, który nie istnieje i gdzie ma odesłać XD
+];
 
 @NgModule({
   declarations: [
@@ -34,20 +38,19 @@ const appRoutes: Routes =[
     AddPropertyComponent,
     PropertyDetailComponent,
     UserLoginComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule, //Po zaimportowaniu, można bez problemu kożystać z Form w html, bo to dodaje nam dodatkowe funkcje specyficzne dla Angular'a
     ReactiveFormsModule, //Import tego powoduje że w projekcie możemy używać reakcyjnych formularzy
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
   ],
   //Rejestracja provicera, które tutaj nazywają się serwisami
-  providers: [
-    HousingService,
-    UserService
-  ],
-  bootstrap: [AppComponent]
+  providers: [HousingService, UserService, AlertifyService, AuthService], //WSPARCIE INTELLISENSE ZACZYNA DZIALAC PO DORZUCENIU TUTAJ
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

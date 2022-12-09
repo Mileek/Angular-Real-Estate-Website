@@ -1,3 +1,4 @@
+import { AlertifyService } from './../../../../services/alertify.service';
 import { User } from './../../../../model/user';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -20,7 +21,11 @@ export class UserRegisterComponent implements OnInit {
   user: User;
   userSubmitted: boolean;
 
-  constructor(private fb: FormBuilder, private userService: UserService) {}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private alertify: AlertifyService
+  ) {}
 
   ngOnInit(): void {
     // this.registrationForm = new FormGroup(
@@ -96,5 +101,9 @@ export class UserRegisterComponent implements OnInit {
       this.registrationForm.reset();
       this.userSubmitted = false;
     }
+    this.alertify.success(
+      'Zarejestrowałeś się pomyślnie - gdyby to działało :).'
+    );
+    this.alertify.error('Jest jeszcze error');
   }
 }
