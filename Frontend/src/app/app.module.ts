@@ -21,6 +21,7 @@ import { AddPropertyComponent } from './property/add-property/add-property.compo
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRegisterComponent } from './user/user-login/user-register/user-register/user-register.component';
+import { PropertyDetailResolverService } from './property/property-detail/property-detail-resolver.service';
 
 const appRoutes: Routes = [
   { path: '', component: PropertyListComponent },
@@ -28,7 +29,10 @@ const appRoutes: Routes = [
   { path: 'add-property', component: AddPropertyComponent },
   { path: 'user/login', component: UserLoginComponent },
   { path: 'user/register', component: UserRegisterComponent },
-  { path: 'property-detail/:id', component: PropertyDetailComponent },
+  {
+    path: 'property-detail/:id', component: PropertyDetailComponent,
+    resolve: { prp: PropertyDetailResolverService }
+  },
   { path: '**', component: PropertyListComponent }, //wrong URL component, który nie istnieje i gdzie ma odesłać XD
 ];
 
@@ -56,7 +60,7 @@ const appRoutes: Routes = [
     BsDatepickerModule.forRoot(),
   ],
   //Rejestracja provicera, które tutaj nazywają się serwisami
-  providers: [HousingService, UserService, AlertifyService, AuthService], //WSPARCIE INTELLISENSE ZACZYNA DZIALAC PO DORZUCENIU TUTAJ
+  providers: [HousingService, UserService, AlertifyService, AuthService, PropertyDetailResolverService], //WSPARCIE INTELLISENSE ZACZYNA DZIALAC PO DORZUCENIU TUTAJ
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

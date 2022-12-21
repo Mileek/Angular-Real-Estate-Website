@@ -1,0 +1,14 @@
+.card {
+  min-height: 600px;
+}
+.photo {
+  max-height: 600px;
+  max-width: 600px;
+}
+.card-img-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+.card img {
+  padding: 10px;
+}

@@ -1,3 +1,5 @@
+import { Property } from './../../model/property';
+import { HousingService } from 'src/app/services/housing.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -6,19 +8,37 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './property-detail.component.html',
   styleUrls: ['./property-detail.component.css'],
 })
-export class PropertyDetailComponent implements OnInit {
+export class PropertyDetailComponent implements OnInit
+{
   public propertyId: number;
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  property = new Property();
 
-  ngOnInit(): void {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private housingService: HousingService
+  ) { }
+
+  ngOnInit(): void
+  {
     this.propertyId = Number(this.route.snapshot.params['id']);
+    this.route.data.subscribe(data =>
+    {
+      this.property = data['prp'];
+    })
 
-    this.route.params.subscribe((params) => {
-      this.propertyId = Number(params['id']); //Its convertion to number, i can use + instead of Number
-    });
-  }
-  onSelectNext() {
-    this.propertyId = this.propertyId + 1;
-    this.router.navigate(['property-detail', this.propertyId]);
+
+    // this.route.params.subscribe(
+    //   (params) =>
+    //   {
+    //     this.propertyId = +params['id'];
+    //     this.housingService.getProperty(this.propertyId).subscribe(
+    //       (data: Property) =>
+    //       {
+    //         this.property = data;
+    //       }, error => this.router.navigate(['/'])
+    //     );
+    //   }
+    // );
   }
 }

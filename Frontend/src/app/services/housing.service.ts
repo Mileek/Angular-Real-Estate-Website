@@ -4,53 +4,88 @@ import { map, Observable } from 'rxjs';
 import { useAnimation } from '@angular/animations';
 import { IPropertyBase } from '../model/IPropertyBase';
 import { Property } from '../model/property';
+import { IProperty } from '../model/IProperty';
 //Provider
 @Injectable({
   providedIn: 'root',
 })
-export class HousingService {
-  constructor(private http: HttpClient) {}
+export class HousingService
+{
+  constructor(private http: HttpClient) { }
 
-  getAllProperties(SellRent: number): Observable<IPropertyBase[]> {
+  getProperty(id: number)
+  {
+    return this.getAllProperties().pipe(
+      map((propertiesArray) =>
+      {
+        return propertiesArray.find(p => p.Id === id) as Property;
+      })
+    );
+  }
+
+  getAllProperties(SellRent?: number): Observable<Property[]>
+  {
     return this.http.get('data/properties.json').pipe(
-      map((data) => {
-        const propertiesArray: Array<IPropertyBase> = [];
+      map(data =>
+      {
+        const propertiesArray: Array<Property> = [];
         const localProperties = JSON.parse(localStorage.getItem('newProp'));
 
-        if (localProperties) {
-          for (const id in localProperties) {
-            if (
-              localProperties.hasOwnProperty(id) &&
-              localProperties[id].SellRent === SellRent
-            ) {
+        if (localProperties)
+        {
+          for (const id in localProperties)
+          {
+            if (SellRent)
+            {
+              if (localProperties.hasOwnProperty(id) && localProperties[id].SellRent === SellRent)
+              {
+                propertiesArray.push(localProperties[id]);
+              }
+            } else
+            {
               propertiesArray.push(localProperties[id]);
             }
           }
         }
 
-        for (const id in data) {
-          if (data.hasOwnProperty(id) && data[id].SellRent === SellRent) {
+        for (const id in data)
+        {
+          if (SellRent)
+          {
+            if (data.hasOwnProperty(id) && data[id].SellRent === SellRent)
+            {
+              propertiesArray.push(data[id]);
+            }
+          } else
+          {
             propertiesArray.push(data[id]);
           }
         }
         return propertiesArray;
       })
     );
+
+    return this.http.get<Property[]>('data/properties.json');
   }
-  addProperty(property: Property) {
+  addProperty(property: Property)
+  {
     let newProp = [property];
     //Dodaj nową właściwość do tablicy jeśli właściwość newProp już istnieje w localStorage
-    if (localStorage.getItem('newProp')) {
+    if (localStorage.getItem('newProp'))
+    {
       newProp = [property, ...JSON.parse(localStorage.getItem('newProp'))];
     }
     localStorage.setItem('newProp', JSON.stringify(newProp));
   }
 
-  newPropID() {
-    if (localStorage.getItem('PID')) {
+  newPropID()
+  {
+    if (localStorage.getItem('PID'))
+    {
       localStorage.setItem('PID', String(+localStorage.getItem('PID') + 1));
       return +localStorage.getItem('PID');
-    } else {
+    } else
+    {
       localStorage.setItem('PID', '101');
       return 101;
     }
