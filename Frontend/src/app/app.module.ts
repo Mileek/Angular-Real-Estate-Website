@@ -12,6 +12,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 
 import { AppComponent } from './app.component';
 import { PropertyCardComponent } from './property/property-card/property-card/property-card.component';
@@ -22,6 +23,9 @@ import { PropertyDetailComponent } from './property/property-detail/property-det
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRegisterComponent } from './user/user-login/user-register/user-register/user-register.component';
 import { PropertyDetailResolverService } from './property/property-detail/property-detail-resolver.service';
+import { FilterPipe } from './Pipes/filter.pipe';
+import { SortPipe } from './Pipes/sort.pipe';
+
 
 const appRoutes: Routes = [
   { path: '', component: PropertyListComponent },
@@ -46,6 +50,8 @@ const appRoutes: Routes = [
     PropertyDetailComponent,
     UserLoginComponent,
     UserRegisterComponent,
+    FilterPipe,
+    SortPipe,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +64,7 @@ const appRoutes: Routes = [
     TabsModule.forRoot(),
     ButtonsModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    NgxGalleryModule,
   ],
   //Rejestracja provicera, które tutaj nazywają się serwisami
   providers: [HousingService, UserService, AlertifyService, AuthService, PropertyDetailResolverService], //WSPARCIE INTELLISENSE ZACZYNA DZIALAC PO DORZUCENIU TUTAJ
