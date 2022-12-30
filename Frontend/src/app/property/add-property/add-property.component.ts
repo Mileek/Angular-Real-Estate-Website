@@ -2,13 +2,13 @@ import { IPropertyBase } from './../../model/IPropertyBase';
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import
-  {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    NgForm,
-    Validators,
-  } from '@angular/forms';
+{
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { HousingService } from 'src/app/services/housing.service';
@@ -31,6 +31,8 @@ export class AddPropertyComponent implements OnInit
 
   propertyTypes: Array<string> = ['House', 'Apartament', 'Duplex'];
   furnishTypes: Array<string> = ['Fully', 'Semi', 'Unfurnished'];
+  cityList: any[];
+
   propertyView: IPropertyBase = {
     Id: null,
     Name: null,
@@ -40,7 +42,7 @@ export class AddPropertyComponent implements OnInit
     FType: null,
     BHK: null,
     BuiltArea: null,
-    City: null,
+    City: '',
     RTM: null,
   };
   constructor(
@@ -53,6 +55,12 @@ export class AddPropertyComponent implements OnInit
   ngOnInit(): void
   {
     this.CreateAddPropertyForm();
+    this.housingService.getAllCities().subscribe(data =>
+    {
+      this.cityList = data;
+      console.log(data);
+    }
+    )
   }
 
   CreateAddPropertyForm()
