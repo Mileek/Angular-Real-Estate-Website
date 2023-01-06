@@ -4,13 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Backend.Models;
 
-namespace Backend.Data.Repo
+namespace Backend.Interfaces
 {
     public interface ICityRepository
     {
         Task<IEnumerable<City>> GetCitiesAsync();
         void AddCity(City city);
         void DeleteCity(int CityId);
-        Task<bool> SaveAsync();
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Interfaces;
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,11 +30,6 @@ namespace Backend.Data.Repo
         public async Task<IEnumerable<City>> GetCitiesAsync()
         {
             return await dc.Cities.ToListAsync();
-        }
-
-        public async Task<bool> SaveAsync()
-        {
-            return await dc.SaveChangesAsync() > 0;
         }
     }
 }
