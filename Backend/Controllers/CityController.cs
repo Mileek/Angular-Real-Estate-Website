@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Backend.Data;
 using Backend.Data.Repo;
+using Backend.Dtos;
 using Backend.Interfaces;
 using Backend.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -15,9 +18,11 @@ namespace Backend.Controllers
     public class CityController : ControllerBase
     {
         private readonly IUnitOfWork uow;
+        private readonly IMapper mapper;
 
-        public CityController(IUnitOfWork uow)
+        public CityController(IUnitOfWork uow, IMapper mapper)
         {
+            this.mapper = mapper;
             this.uow = uow;
         }
 
@@ -26,17 +31,71 @@ namespace Backend.Controllers
         public async Task<IActionResult> GetCities()
         {
             var cities = await uow.CityRepository.GetCitiesAsync();
-            return Ok(cities);
+            var citiesDto = mapper.Map<IEnumerable<CityDto>>(cities);
+            // var citiesDto = cities.Select(x => new CityDto
+            // {
+            //     Id = x.Id,
+            //     Name = x.Name
+            // });
+
+
+            return Ok(citiesDto);
         }
 
         //Post api/city/post -- Post the data in JSON Format
         [HttpPost("post")]
-        public async Task<IActionResult> AddCity(City city)
+        public async Task<IActionResult> AddCity(CityDto cityDto)
         {
+            var city = mapper.Map<City>(cityDto);
+            city.LastUpdatedBy = 1;
+            city.LastUpdatedOn = DateTime.Now;
+            // var city = new City
+            // {
+            //     Name = cityDto.Name,
+            //     LastUpdatedBy = 1,
+            //     LastUpdatedOn = DateTime.Now
+            // };
+
             uow.CityRepository.AddCity(city);
             await uow.SaveAsync();
 
             return StatusCode(201);
+        }
+        //Put służy do podmiany CAŁEGO modelu, tzn zmieniając Nazwę musimy wprowadzić również Kraj czy też Miasto
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateCity(int id, CityDto cityDto)
+        {
+            var cityFromDb = await uow.CityRepository.FindCity(id);
+            cityFromDb.LastUpdatedBy = 1;
+            cityFromDb.LastUpdatedOn = DateTime.Now;
+            mapper.Map(cityDto, cityFromDb);
+            await uow.SaveAsync();
+            return StatusCode(200);
+        }
+        //Update Dtu zostało dodane żeby zaaktualizować TYLKO nazwę miasta, tzn. żeby inne dane się nie zerowały
+        [HttpPut("updateCityName/{id}")]
+        public async Task<IActionResult> UpdateCity(int id, CityUpdateDto cityDto)
+        {
+            var cityFromDb = await uow.CityRepository.FindCity(id);
+            cityFromDb.LastUpdatedBy = 1;
+            cityFromDb.LastUpdatedOn = DateTime.Now;
+            mapper.Map(cityDto, cityFromDb);
+            await uow.SaveAsync();
+            return StatusCode(200);
+        }
+
+        //Patch służy do podmiany części modelu/BazyDanych np tylko Nazwy, albo tylko Kraju, w celu skorzystania z Patch, potrzeba 
+        //zewnętrznej biblioteki Microsoft.AspNetCore.Mvc.NewtonsoftJson co też trzeba dodać w Program.cs builder.Services.AddControllers().AddNewtonsoftJson();
+        [HttpPatch("update/{id}")]
+        public async Task<IActionResult> UpdateCityPath(int id, JsonPatchDocument<City> cityToPath)
+        {
+            var cityFromDb = await uow.CityRepository.FindCity(id);
+            cityFromDb.LastUpdatedBy = 1;
+            cityFromDb.LastUpdatedOn = DateTime.Now;
+
+            cityToPath.ApplyTo(cityFromDb, ModelState);
+            await uow.SaveAsync();
+            return StatusCode(200);
         }
 
         [HttpDelete("delete/{id}")]

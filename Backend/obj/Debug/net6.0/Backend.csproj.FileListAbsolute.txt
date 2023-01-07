@@ -60,3 +60,9 @@ D:\Angular\MyFirstApp\Backend\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Sy
 D:\Angular\MyFirstApp\Backend\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Angular\MyFirstApp\Backend\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\Angular\MyFirstApp\Backend\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+D:\Angular\MyFirstApp\Backend\bin\Debug\net6.0\AutoMapper.dll
+D:\Angular\MyFirstApp\Backend\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Angular\MyFirstApp\Backend\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Angular\MyFirstApp\Backend\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Angular\MyFirstApp\Backend\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Angular\MyFirstApp\Backend\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
