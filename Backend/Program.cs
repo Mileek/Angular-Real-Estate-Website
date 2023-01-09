@@ -4,6 +4,10 @@ using Backend.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Backend.Helpers;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Backend.Extensions;
+using Backend.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,11 +25,9 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.ConfigureExceptionHandler();
+
+app.UseRouting();
 
 app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
