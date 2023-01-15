@@ -14,10 +14,21 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Text;
+using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.ConfigureHostConfiguration(host =>
+{
+    host.AddEnvironmentVariables(prefix: "HSPA_");
+}
+);
+//Gdyby do mojej DB by³o wymagane has³o i chcia³bym je ukryæ
+//var sqlBuilder = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("Default"));
+//sqlBuilder.Password = builder.Configuration.GetSection("DBPassword").Value;
 
+//var connectionString = sqlBuilder.ConnectionString;
 // Add services to the container.
+
 builder.Services.AddCors();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddAutoMapper(typeof(AutomapperProfiles).Assembly);
