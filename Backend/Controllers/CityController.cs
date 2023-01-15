@@ -8,14 +8,14 @@ using Backend.Data.Repo;
 using Backend.Dtos;
 using Backend.Interfaces;
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CityController : ControllerBase
+    [Authorize]
+    public class CityController : BaseController
     {
         private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
@@ -28,6 +28,7 @@ namespace Backend.Controllers
 
         //GET api/city
         [HttpGet("")]
+        [AllowAnonymous] //Dostęp do metody ma każdy (reszta podlega Autentykacji - atrybut na początku klasy [Authorize]
         public async Task<IActionResult> GetCities()
         {
             var cities = await uow.CityRepository.GetCitiesAsync();
