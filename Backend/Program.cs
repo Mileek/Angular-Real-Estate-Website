@@ -61,6 +61,10 @@ app.ConfigureExceptionHandler();
 
 app.UseRouting();
 
+app.UseHsts();
+
+app.UseHttpsRedirection();
+
 app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 app.UseAuthentication();

@@ -27,7 +27,7 @@ namespace Backend.Controllers
         }
 
         //GET api/city
-        [HttpGet("")]
+        [HttpGet("cities")]
         [AllowAnonymous] //Dostęp do metody ma każdy (reszta podlega Autentykacji - atrybut na początku klasy [Authorize]
         public async Task<IActionResult> GetCities()
         {

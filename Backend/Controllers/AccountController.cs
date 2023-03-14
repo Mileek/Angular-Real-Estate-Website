@@ -35,8 +35,23 @@ namespace Backend.Controllers
 
             return Ok(loginRes);
         }
-        //JWT da się odszyfrować wklejając token na stronie jwt.io
-        private string CreateJWT(User user)
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(LoginReqDto loginReq)
+        {
+            if (await uow.UserRepository.UserAlreadyExists(loginReq.UserName))
+            {
+                return BadRequest("User already existes, please select differend user name");
+            }
+            uow.UserRepository.Register(loginReq.UserName, loginReq.Password);
+            await uow.SaveAsync();
+
+            return Ok(201);
+        }
+
+
+            //JWT da się odszyfrować wklejając token na stronie jwt.io
+            private string CreateJWT(User user)
         {
             var secretKey = configuration.GetSection("appSettings:Key").Value;
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
